@@ -1,5 +1,3 @@
-from db import collection
-from text_splitter import get_splitter
 
 
 def store():

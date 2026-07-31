@@ -1,8 +1,5 @@
 import chromadb
-from chromadb.utils.embedding_functions import HuggingFaceEmbeddingFunction
-
 from config import load_config
-
 
 cfg = load_config()
 

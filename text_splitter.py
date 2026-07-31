@@ -1,6 +1,5 @@
-from langchain_text_splitters import MarkdownTextSplitter
-
 from config import load_config
+from langchain_text_splitters import MarkdownTextSplitter
 
 cfg = load_config()
 splitter = MarkdownTextSplitter(
