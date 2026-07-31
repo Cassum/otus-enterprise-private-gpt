@@ -1,7 +1,7 @@
 from pathlib import Path
 
 import yaml
-from pydantic import BaseModel
+from pydantic import BaseModel, FilePath
 
 
 class ChunkingConfig(BaseModel):
@@ -15,9 +15,15 @@ class LLMConfig(BaseModel):
     temperature: float
 
 
+class ChromaDBConfig(BaseModel):
+    db_path: FilePath
+    collection_name: str
+
+
 class Config(BaseModel):
     chunking: ChunkingConfig
     llm: LLMConfig
+    chromadb: ChromaDBConfig
 
 
 def load_config(path: str = "config.yaml") -> Config:

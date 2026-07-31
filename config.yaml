@@ -7,3 +7,6 @@ llm:
   model: "qwen3.5:4b"
   base_url: "http://localhost:11434"
   temperature: 0.1
+
+chromadb:
+  embedding_model: ""
