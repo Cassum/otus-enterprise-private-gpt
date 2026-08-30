@@ -9,4 +9,9 @@ llm:
   temperature: 0.1
 
 chromadb:
-  embedding_model: ""
+  db_path: "./data/chromadb"
+  collection_name: "docs"
+  embedding_model: "nomic-embed-text-v2-moe:latest"
+
+ingest:
+  data_path: "./data/docs/en"
