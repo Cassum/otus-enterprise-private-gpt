@@ -1,7 +1,7 @@
 chunking:
   method: "markdown"
-  chunk_size: 500
-  chunk_overlap: 50
+  chunk_size: 5000
+  chunk_overlap: 200
 
 llm:
   model: "qwen3.5:4b"
