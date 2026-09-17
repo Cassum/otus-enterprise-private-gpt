@@ -1,10 +1,10 @@
 chunking:
   method: "markdown"
   chunk_size: 5000
-  chunk_overlap: 200
+  chunk_overlap: 100
 
 llm:
-  model: "qwen3.5:4b"
+  model: "qwen2.5:3b"
   base_url: "http://localhost:11434"
   temperature: 0.1
 
@@ -15,3 +15,5 @@ chromadb:
 
 ingest:
   data_path: "./data/docs/en"
+  batch_size: 100
+  

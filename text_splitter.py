@@ -1,8 +1,9 @@
-from config import load_config
+from config import Config
 from langchain_text_splitters import MarkdownTextSplitter
 
-cfg = load_config()
-splitter = MarkdownTextSplitter(
-    chunk_size=cfg.chunking.chunk_size,
-    chunk_overlap=cfg.chunking.chunk_overlap,
-)
+
+def get_md_splitter(config: Config) -> MarkdownTextSplitter:
+    return MarkdownTextSplitter(
+        chunk_size=config.chunking.chunk_size,
+        chunk_overlap=config.chunking.chunk_overlap,
+    )

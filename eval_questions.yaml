@@ -1,0 +1,182 @@
+# Оценочный набор вопросов для RAG-ассистента по базе знаний Ultralytics Handbook.
+# Папка документов: data/docs/en/
+# Вопросы сгруппированы по типу нагрузки на чанкинг.
+# Для каждого вопроса указан эталонный ответ и источник(и).
+
+meta:
+  knowledge_base: "Ultralytics Handbook"
+  docs_path: "data/docs/en"
+  language: "ru"
+  purpose: >
+    Оценка качества RAG-ответов при разных размерах чанков (100, 200, 500, 1000, 2000, 5000, 10000).
+    Группа negative — контроль галлюцинаций: корректная система должна ответить, что данных в базе нет.
+
+questions:
+  # ---------------------------------------------------------------
+  # 1. Точечный факт из одного документа
+  # ---------------------------------------------------------------
+  - id: fact_pto_days
+    group: "fact_lookup"
+    question: "Сколько дней PTO получает новый сотрудник в первый год работы?"
+    expected_answer: "25 дней в год: 24 гибких дня + 1 день в честь дня рождения. Плюс официальные праздники и неограниченный больничный."
+    sources: ["people/pto-policy.md"]
+
+  - id: fact_referral_bonus
+    group: "fact_lookup"
+    question: "Какой размер реферального бонуса и когда он выплачивается?"
+    expected_answer: "$5,000, выплачивается после того как кандидат отработает 3 месяца (испытательный срок)."
+    sources: ["finance/referral-bonus.md"]
+
+  - id: fact_hubs
+    group: "fact_lookup"
+    question: "Какие три официальных офиса (hub) есть у Ultralytics?"
+    expected_answer: "Лондон (Великобритания), Мадрид (Испания) и Шэньчжэнь (Китай)."
+    sources: ["finance/relocation.md"]
+
+  - id: fact_rollover
+    group: "fact_lookup"
+    question: "Сколько дней отпуска можно перенести на следующий год?"
+    expected_answer: "До 10 дней. Остальные дни сверх 10 сгорают. Максимальный баланс — 35 дней."
+    sources: ["people/pto-policy.md"]
+
+  - id: fact_clawback
+    group: "fact_lookup"
+    question: "Какую сумму нужно вернуть за релокационный пакет, если уволиться по собственному желанию в первые 12 месяцев?"
+    expected_answer: "100% выплаты ($10,000). При увольнении через 12–24 месяца возвращается 50%, через 24+ месяца — ничего."
+    sources: ["finance/relocation.md"]
+
+  # ---------------------------------------------------------------
+  # 2. Данные в таблицах
+  # ---------------------------------------------------------------
+  - id: table_london_per_diem
+    group: "table_data"
+    question: "Какой полный суточный per diem (lodging + M&IE) в Лондоне?"
+    expected_answer: "Лоджинг $212.00 + M&IE $87.00 = $299.00 в день."
+    sources: ["finance/travel.md"]
+
+  - id: table_spain_per_diem
+    group: "table_data"
+    question: "Назови полный суточный per diem для всех городов Испании."
+    expected_answer: "Барселона $220.50, Мадрид $256.00, Малага $212.50."
+    sources: ["finance/travel.md"]
+
+  - id: table_pto_seniority
+    group: "table_data"
+    question: "Сколько дней PTO начисляется сотруднику с 7 годами стажа?"
+    expected_answer: "7 лет попадает в диапазон 6–8 лет: +3 дня сверх базовых, итого 28 дней в год."
+    sources: ["people/pto-policy.md"]
+
+  - id: table_travel_threshold
+    group: "table_data"
+    question: "При какой сумме поездка переходит из оплаты за свой счёт в предварительное одобрение?"
+    expected_answer: "При стоимости от $3,000. Ниже $3,000 — оплачиваешь сам и подаёшь на возмещение, от $3,000 — заранее запрашиваешь одобрение и предоплату."
+    sources: ["finance/travel.md"]
+
+  - id: table_security_slack
+    group: "table_data"
+    question: "Какой Slack-канал указан для вопросов и инцидентов по безопасности?"
+    expected_answer: "#security (почта security@ultralytics.com). Техподдержка по железу — #it-support."
+    sources: ["index.md"]
+
+  # ---------------------------------------------------------------
+  # 3. Условия и пороговые значения
+  # ---------------------------------------------------------------
+  - id: cond_pto_notice_2weeks
+    group: "conditions"
+    question: "Мне нужен отпуск на 2 недели. За сколько минимум подавать запрос в Rippling?"
+    expected_answer: "Минимум за 1 месяц: отпуск от 5+ дней подаётся не менее чем за месяц вперёд."
+    sources: ["people/pto-policy.md"]
+
+  - id: cond_pto_usage_start
+    group: "conditions"
+    question: "Когда можно начать использовать отпускные дни после выхода на работу?"
+    expected_answer: "Через 30 дней после трудоустройства. Весь годовой лимит начисляется с первого дня."
+    sources: ["people/pto-policy.md"]
+
+  - id: cond_pto_30days_unused
+    group: "conditions"
+    question: "Что произойдёт с 30 неиспользованными днями PTO на конец года?"
+    expected_answer: "Переносится только 10 дней, 20 дней сгорают. В следующем году баланс: 10 переноса + 25 нового = 35 дней (максимум)."
+    sources: ["people/pto-policy.md"]
+
+  - id: cond_relocation_involuntary
+    group: "conditions"
+    question: "Нужно ли возвращать $10,000 за релокацию, если сотрудника уволили (не по собственному желанию) через 6 месяцев?"
+    expected_answer: "Обычно нет: при вынужденном увольнении возврат не требуется (зависит от условий расторжения). Возврат обязателен только при добровольном уходе в первые 24 месяца."
+    sources: ["finance/relocation.md"]
+
+  - id: cond_byod_requirements
+    group: "conditions"
+    question: "Какие требования, чтобы использовать личное устройство (BYOD) для работы?"
+    expected_answer: "Явное одобрение менеджера И отдела IT, обязательная установка Rippling MDM, соответствие всем политикам безопасности; ответственность за устройство лежит на сотруднике."
+    sources: ["tools/hardware.md"]
+
+  # ---------------------------------------------------------------
+  # 4. Композиция из нескольких источников
+  # ---------------------------------------------------------------
+  - id: multi_anchor_days_performance
+    group: "multi_hop"
+    question: "Какие требования к присутствию в офисе в Anchor Days и как это влияет на карьеру?"
+    expected_answer: "Anchor Days — вторник, среда, четверг; обязательны для всех, кто живёт в пределах пригородной доступности (commutable distance) от офиса. Данные бейджей отслеживаются, постоянное присутствие — условие соответствия ожиданиям и право на повышение, а также учитывается при оценке эффективности."
+    sources: ["introduction.md", "mission-vision-values/index.md", "people/onboarding.md"]
+
+  - id: multi_onboarding_hardware
+    group: "multi_hop"
+    question: "Какие модели MacBook доступны сотрудникам и кому какая положена?"
+    expected_answer: "MacBook Air 13\" M5 (по умолчанию для всех) и MacBook Pro 14\" M5 (для технических/разработческих ролей). Про неудобен для частых поездок. Нестандартные конфигурации требуют одобрения менеджера."
+    sources: ["tools/hardware.md", "people/onboarding.md"]
+
+  - id: multi_bonuses_compare
+    group: "multi_hop"
+    question: "Сравни условия реферального бонуса и релокационного пакета: когда и кому платят?"
+    expected_answer: "Оба — разовые выплаты: реферальный $5,000 после 3 месяцев работы кандидата; релокационный $10,000 после переезда в пределах 30 минут езды от офиса, в первом платёжном цикле после подтверждения адреса. Разница: реферальный без возврата, релокационный подлежит возврату при добровольном уходе в течение 24 месяцев."
+    sources: ["finance/referral-bonus.md", "finance/relocation.md"]
+
+  - id: multi_onboarding_day1_help
+    group: "multi_hop"
+    question: "Что нужно сделать в первый день онбординга и куда обращаться при проблемах с железом?"
+    expected_answer: "В первый день: welcome-встреча с менеджером, IT-настройка (обязательно Rippling MDM на всех устройствах), HR-процедуры, обязательный security-тренинг (GDPR, CCPA) через Vanta, настройка dev-среды. При проблемах с железом писать в #it-support."
+    sources: ["people/onboarding.md", "tools/hardware.md"]
+
+  # ---------------------------------------------------------------
+  # 5. Открытые / суммаризирующие
+  # ---------------------------------------------------------------
+  - id: open_culture
+    group: "summary"
+    question: "Как устроена культура работы Ultralytics: что такое Anchor Days и зачем они?"
+    expected_answer: "Модель High-Resolution Hybrid: приоритет очной работе. Вторник–четверг (Anchor Days) — обязательное присутствие в офисе для находящихся в пределах пригородной доступности: совместные whiteboard-сессии, отладка и быстрые решения. Понедельник и пятница — гибкие дни для глубокой работы. Посещение бейджем отслеживается и влияет на оценку и продвижение. Опция 5 дней в офисе даёт больше привилегий. Офисы работают в Лондоне, Мадриде и Шэньчжэне, все — dog-friendly."
+    sources: ["introduction.md", "mission-vision-values/index.md"]
+
+  - id: open_values
+    group: "summary"
+    question: "Назови миссию и ценности компании."
+    expected_answer: "Миссия — демократизировать ИИ и двигать мир вперёд через лучшие open-sources решения. Видение — равный доступ каждого к трансформирующему ИИ. Пять ценностей: Relentless Progress (непрерывный прогресс), Strive for Excellence (стремление к совершенству), Actions Not Words (дела, а не слова), Act with Urgency (действовать быстро), Open Access to All (открытость для всех)."
+    sources: ["mission-vision-values/index.md"]
+
+  - id: open_slack_channels
+    group: "summary"
+    question: "Какие Slack-каналы нужны новичку и для чего они?"
+    expected_answer: "Ключевые: #general (общефирменные объявления), #it-support (технические проблемы и железо), #compliance (безопасность и юридические вопросы), #hr (льготы, зарплата, персональные вопросы), #finance (расходы и бюджеты), #community / #yolo (продукт и сообщество), #engineering / #your-team (ваша команда), #random (неформальное общение)."
+    sources: ["people/onboarding.md"]
+
+  # ---------------------------------------------------------------
+  # 6. Отрицательные — данных в базе нет
+  # ---------------------------------------------------------------
+  - id: negative_salary
+    group: "negative"
+    question: "Какая зарплатная вилка у Junior Data Scientist в Ultralytics?"
+    expected_answer: "NULL"
+    sources: []
+
+  - id: negative_vacation_calendar
+    group: "negative"
+    question: "Когда ближайший корпоративный отпуск в компании по производственному календарю на 2026 год?"
+    expected_answer: "NULL"
+    sources: []
+
+  - id: negative_chatgpt_subscription
+    group: "negative"
+    question: "Сколько стоит подписка на ChatGPT для сотрудников Ultralytics и как её оформить?"
+    expected_answer: "NULL"
+    sources: []
+    

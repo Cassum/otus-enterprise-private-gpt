@@ -13,4 +13,6 @@ dependencies = [
     "pyyaml>=6.0.3",
     "ruff>=0.16.1",
     "sentence-transformers>=5.6.1",
+    "streamlit>=1.63.0",
+    "tqdm>=4.70.0",
 ]

@@ -23,6 +23,8 @@ class ChromaDBConfig(BaseModel):
 
 class IngestConfig(BaseModel):
     data_path: str
+    batch_size: int
+
 
 class Config(BaseModel):
     chunking: ChunkingConfig

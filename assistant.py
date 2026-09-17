@@ -1,12 +1,12 @@
 import ollama
-
-from config import load_config, Config
+from config import Config, load_config
 from db import get_collection
 
 config = load_config()
 
 SYSTEM_PROMPT_TEMPLATE = """
-Ты корпоративный ассистент по внутренней базе знаний Ultralitics. Отвечай на вопрос пользователя ТОЛЬКО опираясь на следующий контекст:
+Ты корпоративный ассистент по внутренней базе знаний Ultralitics.
+Отвечай на вопрос пользователя ТОЛЬКО опираясь на следующий контекст:
 
 {context}
 
