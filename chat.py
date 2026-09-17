@@ -1,5 +1,8 @@
 import streamlit as st
 from assistant import Assistant
+from config import load_config
+
+assistant = Assistant(load_config())
 
 st.title("Ассистент по внутренней базе знаний Ultralitics")
 
@@ -16,7 +19,6 @@ if prompt := st.chat_input("What is up?"):
         st.markdown(prompt)
 
     with st.chat_message("assistant"):
-        assistant = Assistant()
         response = assistant.ask(prompt).message.content
         st.markdown(response)
     st.session_state.messages.append({"role": "assistant", "content": response})

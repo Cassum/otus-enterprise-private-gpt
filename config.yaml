@@ -1,6 +1,6 @@
 chunking:
   method: "markdown"
-  chunk_size: 5000
+  chunk_size: 1000
   chunk_overlap: 100
 
 llm:

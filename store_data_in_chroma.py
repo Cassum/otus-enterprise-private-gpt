@@ -54,5 +54,5 @@ def ingest(config: Config, collection: chromadb.Collection):
 
 if __name__ == "__main__":
     config = load_config()
-    collection = get_collection()
+    collection = get_collection(config)
     ingest(config, collection)

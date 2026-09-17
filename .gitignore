@@ -3,6 +3,5 @@ __pycache__/
 *.pyc
 .idea/
 .ruff_cache/
-.workflow/  
+.workflow/
 data/chroma*
-uv.lock
