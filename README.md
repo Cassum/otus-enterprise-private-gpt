@@ -193,8 +193,8 @@ ingest:
 
 Модель отдаёт приоритет контексту из базы, а не собственным знаниям.
 
-### Скриншоты интерфейса
-![Интерфейс чата](screenshots/ui.png)
+### Скриншот интерфейса
+[Интерфейс чата](https://github.com/Cassum/otus-enterprise-private-gpt/blob/master/screenshots/ui.png)
 
 ## Анализ слабых мест и вывод о защите данных
 
